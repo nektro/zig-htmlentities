@@ -1,0 +1,6 @@
+id: vlwb0j7i70laxoc8eb8gd59glleevdefauq7g30wz7nkp869
+name: htmlentities
+main: mod.zig
+license: MIT
+description: HTML entity data for Zig
+dependencies:

@@ -14,16 +14,13 @@ pub const Codepoints = union(enum) {
 
 pub const ENTITIES = @import("entities.zig").ENTITIES;
 
-fn order(_: void, lhs: Entity, rhs: Entity) std.math.Order {
+fn compare(lhs: Entity, rhs: Entity) std.math.Order {
     return std.mem.order(u8, lhs.entity, rhs.entity);
 }
 
 pub fn lookup(entity: []const u8) ?Entity {
-    const maybe_index = std.sort.binarySearch(Entity, Entity{
-        .entity = entity,
-        .codepoints = .{ .Single = 0 },
-        .characters = "",
-    }, ENTITIES[0..], {}, order);
+    const context: Entity = .{ .entity = entity, .codepoints = .{ .Single = 0 }, .characters = "" };
+    const maybe_index = std.sort.binarySearch(Entity, &ENTITIES, context, compare);
 
     if (maybe_index) |index| {
         return ENTITIES[index];
